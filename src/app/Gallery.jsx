@@ -10,7 +10,7 @@ const Gallery = () => {
   useEffect(() => {
     const getPosts = async () => {
       const { data: res } = await axios.get(
-        `https://graph.instagram.com/me/media?fields=id,caption,media_url,media_type,thumbnail_url,permalink&access_token=${process.env.INSTAGRAM_ACCESS_TOKEN}`
+        `https://graph.instagram.com/me/media?fields=id,caption,media_url,media_type,thumbnail_url,permalink&access_token=`
       );
       setPosts(res.data);
     };
@@ -40,20 +40,19 @@ const Gallery = () => {
             target="_blank"
             rel="noopener noreferrer"
           >
-            {post.media_type === "IMAGE" ? (
-              <img
-                className="object-cover aspect-square rounded-sm hover:scale-110 transition-all duration-300"
-                src={post.media_url}
-                alt={post.caption}
-              />
-            ) : (
+            {post.media_type === "VIDEO" ? (
               <video
                 controls
                 className="object-cover aspect-square rounded-sm hover:scale-110 transition-all duration-300"
               >
                 <source src={post.media_url} type="video/mp4" />
-                Your browser does not support the video tag.
               </video>
+            ) : (
+              <img
+                className="object-cover aspect-square rounded-sm hover:scale-110 transition-all duration-300"
+                src={post.media_url}
+                alt={post.caption}
+              />
             )}
           </a>
         ))}
@@ -64,8 +63,8 @@ const Gallery = () => {
             key={number}
             className={
               currentPage === number
-                ? "btn btn-accent font-bold text-xl hover:btn-info mb-24"
-                : "btn btn-neutral"
+                ? "btn btn-accent font-bold text-xl hover:btn-info mt-6 mb-48"
+                : "btn btn-neutral mt-6"
             }
             onClick={() => setCurrentPage(number)}
           >
