@@ -10,7 +10,7 @@ const Gallery = () => {
   useEffect(() => {
     const getPosts = async () => {
       const { data: res } = await axios.get(
-        `https://graph.instagram.com/me/media?fields=id,caption,media_url,media_type,thumbnail_url,permalink&access_token=IGQVJYN1VsRVBLZAXZALMG1lY0tvQ1l3WGZAabWFhNnNINnE4ZAUEwTy1Remdzc3Y3aWJXa0ZAJS1pyOXFXYjVyNlNqZAW42QzFsSU8wUVRUWG5nbWVJNXIzaURlZAzlaalM4Y085b0ZAtcnh3cVdiSlhHbzR5SAZDZD`
+        `https://graph.instagram.com/me/media?fields=id,caption,media_url,media_type,thumbnail_url,permalink&access_token=${process.env.INSTAGRAM_ACCESS_TOKEN}`
       );
       setPosts(res.data);
     };
@@ -32,24 +32,30 @@ const Gallery = () => {
       <h1 className="text-center text-5xl font-bold mt-12">
         Instagram Gallery
       </h1>
-      <div className="grid grid-cols-3 gap-4 px-12 mt-12 justify-center mb-12">
+      <div className="grid grid-cols-3 gap-4 px-12 mt-12 justify-center">
         {visiblePosts.map((post) => (
-          <>
-            {post.media_type === "VIDEO" ? (
-              <video
-                controls
-                className="object-cover aspect-square rounded-sm hover:scale-110 transition-all duration-300"
-              >
-                <source src={post.media_url} type="video/mp4" />
-              </video>
-            ) : (
+          <a
+            key={post.id}
+            href={post.permalink}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {post.media_type === "IMAGE" ? (
               <img
                 className="object-cover aspect-square rounded-sm hover:scale-110 transition-all duration-300"
                 src={post.media_url}
                 alt={post.caption}
               />
+            ) : (
+              <video
+                controls
+                className="object-cover aspect-square rounded-sm hover:scale-110 transition-all duration-300"
+              >
+                <source src={post.media_url} type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
             )}
-          </>
+          </a>
         ))}
       </div>
       <div className="flex justify-center mb-12 gap-6 ">
