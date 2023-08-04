@@ -1,9 +1,11 @@
-import Image from 'next/image'
+import Gallery from "./Gallery";
 
-export default function Home() {
+const page = () => {
   return (
-    <main className="">
-      
-    </main>
-  )
-}
+    <section>
+      <Gallery />
+    </section>
+  );
+};
+
+export default page;
