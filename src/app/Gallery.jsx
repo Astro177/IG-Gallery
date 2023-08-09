@@ -6,11 +6,10 @@ import { useEffect, useState } from "react";
 const Gallery = () => {
   const [posts, setPosts] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
-
   useEffect(() => {
     const getPosts = async () => {
       const { data: res } = await axios.get(
-        `https://graph.instagram.com/me/media?fields=id,caption,media_url,media_type,thumbnail_url,permalink&access_token=`
+        `https://graph.instagram.com/me/media?fields=id,caption,media_url,media_type,thumbnail_url,permalink&access_token=${process.env.NEXT_PUBLIC_INSTAGRAM_KEY}`
       );
       setPosts(res.data);
     };
